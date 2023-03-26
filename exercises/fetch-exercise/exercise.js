@@ -17,10 +17,24 @@ Open index.html in your browser. Every time you refresh the page,
 a different greeting should be displayed in the box.
 */
 
-fetch("*** Write the API address here ***")
-  .then(function (response) {
-    return response.text();
-  })
-  .then(function (greeting) {
-    // Write the code to display the greeting text here
-  });
+//Get DOM elements
+const lengua = document.querySelector('span');
+const greetingText = document.querySelector('p');
+
+fetchGreeting();
+
+async function fetchGreeting() {
+  try {
+    const response = await fetch('https://www.greetingsapi.com/random');
+    const greeting = await response.json();
+    sayHello(greeting);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function sayHello(greeting) {
+  const greetingObj = greeting;
+  lengua.innerText = greetingObj.language;
+  greetingText.innerText = greetingObj.greeting;
+}
